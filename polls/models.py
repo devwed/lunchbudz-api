@@ -6,7 +6,7 @@ class User(models.Model):
 		return self.name
 class Group(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
-	name = models.CharField(max_length=100, blank=True, default='')
+	name = models.CharField(max_length=100)
 	members = models.ManyToManyField(User)
 	ready = models.BooleanField(default=False)
 	def __str__(self):

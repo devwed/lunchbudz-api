@@ -57,3 +57,9 @@ def group_detail(request, pk):
 	if request.method == 'GET':
 		serializer = GroupSerializer(group)
 		return JsonResponse(serializer.data)
+'''
+	elif request.method == 'POST':
+		data = JSONParser().parse(request)
+		serializer = UserSerializer(data=data)
+		if serializer.is_valid():
+'''
