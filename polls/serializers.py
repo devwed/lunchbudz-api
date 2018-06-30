@@ -7,6 +7,7 @@ class UserSerializer(serializers.ModelSerializer):
 		fields = ('id', 'name')
 
 class GroupSerializer(serializers.ModelSerializer):
+	members = UserSerializer(read_only=True, many=True)
 	class Meta:
 		model = Group
-		fields = ('id', 'created', 'name', 'ready')
+		fields = ('id', 'created', 'name', 'ready', 'members')

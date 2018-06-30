@@ -57,9 +57,14 @@ def group_detail(request, pk):
 	if request.method == 'GET':
 		serializer = GroupSerializer(group)
 		return JsonResponse(serializer.data)
-'''
-	elif request.method == 'POST':
+
+	elif request.method == 'PUT':
 		data = JSONParser().parse(request)
-		serializer = UserSerializer(data=data)
-		if serializer.is_valid():
-'''
+		name = data.get('name')
+		if isinstance(name, str):
+			matches = User.objects.filter(name=name)
+			if matches.exists():
+				group.members.add(matches[0])
+				return HttpResponse(status=200)
+		return HttpResponse(status=400)
+			
