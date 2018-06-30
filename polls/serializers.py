@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from polls.models import User, Group
+from polls.models import User, Group, Membership
 
 class UserSerializer(serializers.ModelSerializer):
 	class Meta:
