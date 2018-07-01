@@ -93,6 +93,10 @@ def ready(request, pk):
 				return HttpResponse(status=400)
 			membership.ready = True
 			membership.save()
+			#now see if all members are ready, and if so flip group to ready
+			if all_ready(group):
+				group.ready = True
+				group.save()
 			return HttpResponse(status=200)
 		return HttpResponse(status=400)
 
@@ -100,3 +104,17 @@ def ready(request, pk):
 		memberships = Membership.objects.filter(group=group)
 		serializer = MembershipSerializer(memberships, many=True)
 		return JsonResponse(serializer.data, safe=False)
+
+
+#Purpose: checks to see if all group members are ready
+#Output: True || False
+#Conditions: needs to only be called with valid, member-having 
+#group or will set group to ready
+def all_ready(group):
+	ready = True
+	members = Membership.objects.filter(group=group)
+	for member in members:
+		if not member.ready:
+			ready = False
+			break
+	return ready 
