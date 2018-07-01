@@ -11,3 +11,10 @@ class GroupSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Group
 		fields = ('id', 'created', 'name', 'ready', 'members')
+
+class MembershipSerializer(serializers.ModelSerializer):
+	user = UserSerializer()
+	group = GroupSerializer()
+	class Meta:
+		model = Membership
+		fields = ('joined', 'ready', 'user', 'group')

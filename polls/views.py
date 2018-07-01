@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from polls.models import User, Group, Membership
-from polls.serializers import UserSerializer, GroupSerializer
+from polls.serializers import UserSerializer, GroupSerializer, MembershipSerializer
 
 @csrf_exempt
 def users(request):
@@ -95,3 +95,8 @@ def ready(request, pk):
 			membership.save()
 			return HttpResponse(status=200)
 		return HttpResponse(status=400)
+
+	elif request.method == 'GET':
+		memberships = Membership.objects.filter(group=group)
+		serializer = MembershipSerializer(memberships, many=True)
+		return JsonResponse(serializer.data, safe=False)
